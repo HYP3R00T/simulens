@@ -1,11 +1,14 @@
 [project]
 name = "simulens"
-version = "0.1.0"
+version = "0.0.1"
 description = "A Python-first toolkit for interactive physics simulation and GPU-accelerated scientific visualization."
 readme = "README.md"
 requires-python = ">=3.14"
 authors = [{ name = "Rajesh", email = "hyperoot.tech@proton.me" }]
 dependencies = []
+
+[project.scripts]
+simulens = "simulens:main"
 
 [build-system]
 requires = ["uv_build>=0.12.7,<0.13.0"]
