@@ -4,9 +4,21 @@ requires-python = ">=3.14"
 
 [manifest]
 members = [
+    "simple-example",
     "simulens",
     "simulens-workspace",
 ]
+
+[[package]]
+name = "simple-example"
+version = "0.1.0"
+source = { virtual = "examples/simple-example" }
+dependencies = [
+    { name = "simulens" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "simulens", editable = "packages/simulens" }]
 
 [[package]]
 name = "simulens"
