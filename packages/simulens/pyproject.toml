@@ -5,10 +5,9 @@ description = "A Python-first toolkit for interactive physics simulation and GPU
 readme = "README.md"
 requires-python = ">=3.14"
 authors = [{ name = "Rajesh", email = "hyperoot.tech@proton.me" }]
-dependencies = []
-
-[project.scripts]
-simulens = "simulens:main"
+dependencies = [
+  "pydantic>=2.13.5",
+]
 
 [build-system]
 requires = ["uv_build>=0.12.7,<0.13.0"]

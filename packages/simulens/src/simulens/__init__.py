@@ -1,10 +1,3 @@
-def hello() -> str:
-    return "Hello from simulens!"
+from .application import Application
 
-
-def main() -> None:
-    print(hello())
-
-
-if __name__ == "__main__":
-    main()
+__all__ = ["Application"]

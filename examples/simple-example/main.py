@@ -1,6 +1,5 @@
-def main():
-    print("Hello from simple-example!")
-
+from simulens import Application
 
 if __name__ == "__main__":
-    main()
+    app = Application()
+    app.run()
