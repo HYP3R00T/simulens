@@ -1,0 +1,4 @@
+[files]
+include = ["**/*.toml"]
+exclude = ["**/*.lock"]
+respect-ignore-files = true

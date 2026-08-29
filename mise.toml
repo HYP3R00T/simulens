@@ -4,6 +4,7 @@ prek = "latest"
 ruff = "latest"
 rumdl = "latest"
 shellcheck = { version = "latest", os = ["linux", "macos"] }
+tombi = "latest"
 ty = "latest"
 uv = "latest"
 

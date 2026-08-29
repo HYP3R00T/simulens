@@ -50,6 +50,12 @@ repos:
     hooks:
       - id: rumdl
 
+  - repo: https://github.com/tombi-toml/tombi-pre-commit
+    rev: v1.5.0
+    hooks:
+      - id: tombi-format
+      - id: tombi-lint
+
   - repo: https://github.com/shellcheck-py/shellcheck-py
     rev: v0.11.0.1-1
     hooks:

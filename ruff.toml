@@ -11,20 +11,20 @@ preview = true
 
 [lint]
 select = [
-  "E",    # pycodestyle errors
-  "W",    # pycodestyle warnings
-  "F",    # pyflakes
-  "I",    # isort
-  "C",    # flake8-comprehensions
-  "B",    # flake8-bugbear
-  "UP",   # pyupgrade
+  "E",  # pycodestyle errors
+  "W",  # pycodestyle warnings
+  "F",  # pyflakes
+  "I",  # isort
+  "C",  # flake8-comprehensions
+  "B",  # flake8-bugbear
+  "UP",  # pyupgrade
   "SIM",  # flake8-simplify
-  "PERF", # perflint (performance issues)
-  "N",    # pep8-naming
+  "PERF",  # perflint (performance issues)
+  "N",  # pep8-naming
 ]
 ignore = [
-  "E501", # line too long
-  "C901", # too complex
+  "E501",  # line too long
+  "C901",  # too complex
 ]
 
 [lint.isort]
