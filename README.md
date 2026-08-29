@@ -1,7 +1,7 @@
 <div align="center">
-<h1>devcontainer-python-template</h1>
+<h1>Simulens</h1>
 <p>
-	<a href="https://hyp3r00t.github.io/devcontainer-python-template/">
+	<a href="https://hyp3r00t.github.io/simulens/">
 		<img alt="Docs" src="https://img.shields.io/badge/docs-online-0A66C2?style=for-the-badge" />
 	</a>
 	<a href="https://github.com/sponsors/HYP3R00T">
@@ -12,7 +12,7 @@
 	</a>
 </p>
 
-<p>Production-ready Python devcontainer template focused on speed, consistency, and team workflows.</p>
+<p>Simulens is a programmable simulation and visualization toolkit for translating mathematical and physical models into interactive visual experiences. It separates simulation state from rendering, providing reusable representations for particles, paths, meshes, fields, and other scientific data. Simulens uses Python for modelling and orchestration, with Slang-powered GPU rendering and computation where performance is needed.</p>
 
 </div>
 
@@ -35,10 +35,10 @@ Prerequisites: Docker + VS Code with the Dev Containers extension.
 
 ```bash
 # Clone the template
-git clone https://github.com/HYP3R00T/devcontainer-python-template.git
+git clone https://github.com/HYP3R00T/simulens.git
 
 # Enter the project folder
-cd devcontainer-python-template
+cd simulens
 
 # Open in VS Code
 code .

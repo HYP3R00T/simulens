@@ -1,5 +1,5 @@
 {
-	"name": "devcontainer-python-template",
+	"name": "simulens",
 	"build": {
 		"context": ".",
 		"dockerfile": "Dockerfile"
