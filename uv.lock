@@ -1,0 +1,25 @@
+version = 1
+revision = 3
+requires-python = ">=3.14"
+
+[manifest]
+members = [
+    "simulens",
+    "simulens-workspace",
+]
+
+[[package]]
+name = "simulens"
+version = "0.1.0"
+source = { editable = "packages/simulens" }
+
+[[package]]
+name = "simulens-workspace"
+version = "0.1.0"
+source = { virtual = "." }
+dependencies = [
+    { name = "simulens" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "simulens", editable = "packages/simulens" }]
