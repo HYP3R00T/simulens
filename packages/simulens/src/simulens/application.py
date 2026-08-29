@@ -1,3 +1,6 @@
+import time
+
+import slangpy as spy
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 
 
@@ -37,4 +40,20 @@ class Application:
         return self._config.size
 
     def run(self) -> None:
-        print(self.title)
+        width, height = self.size
+
+        window = spy.Window(
+            width=width,
+            height=height,
+            title=self.title,
+            resizable=True,
+        )
+
+        try:
+            while not window.should_close():
+                window.process_events()
+
+                # Temporary pacing until we introduce VSync.
+                time.sleep(1 / 120)
+        finally:
+            window.close()
