@@ -1,6 +1,6 @@
 import glfw
 
-from .renderer import Renderer
+from .._rendering import Renderer
 from ..scene import Scene
 
 
