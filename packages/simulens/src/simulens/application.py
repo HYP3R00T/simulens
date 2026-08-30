@@ -1,6 +1,6 @@
-import slangpy as spy
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 
+from ._runtime import Runtime
 from .scene import Scene
 
 
@@ -40,50 +40,14 @@ class Application:
         return self._config.size
 
     def run(self, scene: Scene) -> None:
-        width, height = self.size
-
-        device = spy.Device()
+        runtime = Runtime(
+            title=self.title,
+            size=self.size,
+        )
 
         try:
-            window = spy.Window(
-                width=width,
-                height=height,
-                title=self.title,
-                resizable=True,
-            )
-
-            try:
-                surface = device.create_surface(window)
-                surface.configure(
-                    width=width,
-                    height=height,
-                    vsync=True,
-                )
-
-                try:
-                    while not window.should_close():
-                        window.process_events()
-
-                        surface_texture = surface.acquire_next_image()
-
-                        if surface_texture is None:
-                            continue
-
-                        command_encoder = device.create_command_encoder()
-
-                        command_encoder.clear_texture_float(
-                            surface_texture,
-                            clear_value=spy.float4(*scene.background_color),
-                        )
-
-                        device.submit_command_buffer(command_encoder.finish())
-
-                        del surface_texture
-                        surface.present()
-                finally:
-                    device.wait()
-                    surface.unconfigure()
-            finally:
-                window.close()
+            while runtime.is_running:
+                runtime.process_events()
+                runtime.render(scene)
         finally:
-            device.close()
+            runtime.close()
