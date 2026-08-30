@@ -21,6 +21,7 @@ class Renderer:
             fragment_shader=fragment_shader,
         )
         self._fill_color = cast(moderngl.Uniform, self._program["fill_color"])
+        self._projection = cast(moderngl.Uniform, self._program["projection"])
         self._triangle_resources: dict[
             Triangle,
             tuple[moderngl.Buffer, moderngl.VertexArray],
@@ -43,6 +44,7 @@ class Renderer:
 
         self._context.screen.use()
         self._context.clear(*scene.background_color)
+        self._update_projection(scene, width, height)
 
         for node in scene.nodes:
             if isinstance(node, Triangle):
@@ -72,6 +74,31 @@ class Renderer:
         _, vertex_array = resources
         self._fill_color.value = triangle.color
         vertex_array.render(mode=moderngl.TRIANGLES)
+
+    def _update_projection(self, scene: Scene, width: int, height: int) -> None:
+        camera = scene.camera
+        aspect_ratio = width / height
+        visible_width = camera.visible_height * aspect_ratio
+
+        scale_x = 2.0 / visible_width
+        scale_y = 2.0 / camera.visible_height
+        center_x, center_y = camera.center
+
+        projection = array(
+            "f",
+            [
+                scale_x,
+                0.0,
+                0.0,
+                0.0,
+                scale_y,
+                0.0,
+                -center_x * scale_x,
+                -center_y * scale_y,
+                1.0,
+            ],
+        )
+        self._projection.write(projection.tobytes())
 
     def close(self) -> None:
         if self._closed:

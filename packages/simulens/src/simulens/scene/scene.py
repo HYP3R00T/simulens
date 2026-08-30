@@ -2,6 +2,7 @@ from typing import TypeVar
 
 from pydantic import BaseModel, ConfigDict
 
+from .camera import Camera2D
 from .node import Node
 from ..geometry import Color
 
@@ -23,8 +24,10 @@ class Scene:
         self,
         *,
         background_color: Color = (0.0, 0.0, 0.0, 1.0),
+        camera: Camera2D | None = None,
     ) -> None:
         self._config = SceneConfig(background_color=background_color)
+        self._camera = camera or Camera2D()
         self._nodes: list[Node] = []
 
     def add(self, node: NodeType) -> NodeType:
@@ -34,6 +37,10 @@ class Scene:
     @property
     def background_color(self) -> Color:
         return self._config.background_color
+
+    @property
+    def camera(self) -> Camera2D:
+        return self._camera
 
     @property
     def nodes(self) -> tuple[Node, ...]:
