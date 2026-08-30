@@ -1,61 +1,33 @@
-import slangpy as spy
+import moderngl
 
 from ..scene import Scene
 
 
 class Renderer:
     def __init__(self) -> None:
-        self._device = spy.Device()
-        self._surface: spy.Surface | None = None
+        self._context = moderngl.create_context(require=330)
+        self._framebuffer_size = (0, 0)
         self._closed = False
 
-    def attach(self, window: spy.Window) -> None:
-        if self._surface is not None:
-            raise RuntimeError("Renderer is already attached to a window")
+    def resize(self, width: int, height: int) -> None:
+        self._framebuffer_size = (width, height)
 
-        surface = self._device.create_surface(window)
-        surface.configure(
-            width=window.width,
-            height=window.height,
-            vsync=True,
-        )
+        if width > 0 and height > 0:
+            self._context.viewport = (0, 0, width, height)
 
-        self._surface = surface
+    def render(self, scene: Scene) -> bool:
+        width, height = self._framebuffer_size
 
-    def render(self, scene: Scene) -> None:
-        if self._surface is None:
-            raise RuntimeError("Renderer is not attached to a window")
+        if width <= 0 or height <= 0:
+            return False
 
-        surface_texture = self._surface.acquire_next_image()
-
-        if surface_texture is None:
-            return
-
-        try:
-            command_encoder = self._device.create_command_encoder()
-
-            command_encoder.clear_texture_float(
-                surface_texture,
-                clear_value=spy.float4(*scene.background_color),
-            )
-
-            self._device.submit_command_buffer(command_encoder.finish())
-        finally:
-            del surface_texture
-
-        self._surface.present()
+        self._context.screen.use()
+        self._context.clear(*scene.background_color)
+        return True
 
     def close(self) -> None:
         if self._closed:
             return
 
         self._closed = True
-
-        try:
-            self._device.wait()
-        finally:
-            try:
-                if self._surface is not None:
-                    self._surface.unconfigure()
-            finally:
-                self._device.close()
+        self._context.release()

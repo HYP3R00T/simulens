@@ -1,5 +1,4 @@
 [tools]
-"github:shader-slang/slang" = "latest"
 gitleaks = "latest"
 prek = "latest"
 ruff = "latest"
