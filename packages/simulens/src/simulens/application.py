@@ -1,7 +1,7 @@
-import time
-
 import slangpy as spy
 from pydantic import BaseModel, ConfigDict, Field, PositiveInt
+
+from .scene import Scene
 
 
 class ApplicationConfig(BaseModel):
@@ -39,21 +39,51 @@ class Application:
     def size(self) -> tuple[int, int]:
         return self._config.size
 
-    def run(self) -> None:
+    def run(self, scene: Scene) -> None:
         width, height = self.size
 
-        window = spy.Window(
-            width=width,
-            height=height,
-            title=self.title,
-            resizable=True,
-        )
+        device = spy.Device()
 
         try:
-            while not window.should_close():
-                window.process_events()
+            window = spy.Window(
+                width=width,
+                height=height,
+                title=self.title,
+                resizable=True,
+            )
 
-                # Temporary pacing until we introduce VSync.
-                time.sleep(1 / 120)
+            try:
+                surface = device.create_surface(window)
+                surface.configure(
+                    width=width,
+                    height=height,
+                    vsync=True,
+                )
+
+                try:
+                    while not window.should_close():
+                        window.process_events()
+
+                        surface_texture = surface.acquire_next_image()
+
+                        if surface_texture is None:
+                            continue
+
+                        command_encoder = device.create_command_encoder()
+
+                        command_encoder.clear_texture_float(
+                            surface_texture,
+                            clear_value=spy.float4(*scene.background_color),
+                        )
+
+                        device.submit_command_buffer(command_encoder.finish())
+
+                        del surface_texture
+                        surface.present()
+                finally:
+                    device.wait()
+                    surface.unconfigure()
+            finally:
+                window.close()
         finally:
-            window.close()
+            device.close()
