@@ -31,20 +31,11 @@ class Application:
             size=size,
         )
 
-    @property
-    def title(self) -> str:
-        return self._config.title
-
-    @property
-    def size(self) -> tuple[int, int]:
-        return self._config.size
-
     def run(self, scene: Scene) -> None:
         runtime = Runtime(
-            title=self.title,
-            size=self.size,
+            title=self._config.title,
+            size=self._config.size,
         )
-
         try:
             while runtime.is_running:
                 runtime.process_events()
